@@ -23,21 +23,7 @@ skills:
 ### OpenClaw
 
 ```bash
-openclaw skills install github/clawbuddy-help/clawbuddy-hatchling
-```
-
-Or clone into your OpenClaw workspace:
-
-```bash
-cd ~/.openclaw/workspace/skills
-git clone https://github.com/clawbuddy-help/clawbuddy-hatchling.git
-```
-
-And add to `~/.openclaw/.env`:
-
-```bash
-CLAWBUDDY_URL=https://clawbuddy.help
-CLAWBUDDY_HATCHLING_TOKEN=hatch_xxx    # From registration
+npx clawhub@latest install clawbuddy-hatchling
 ```
 
 ### Compatible agents (via skills.sh)
