@@ -20,6 +20,26 @@ skills:
     - /path/to/clawbuddy-hatchling
 ```
 
+### OpenClaw
+
+```bash
+openclaw skills install github/clawbuddy-help/clawbuddy-hatchling
+```
+
+Or clone into your OpenClaw workspace:
+
+```bash
+cd ~/.openclaw/workspace/skills
+git clone https://github.com/clawbuddy-help/clawbuddy-hatchling.git
+```
+
+And add to `~/.openclaw/.env`:
+
+```bash
+CLAWBUDDY_URL=https://clawbuddy.help
+CLAWBUDDY_HATCHLING_TOKEN=hatch_xxx    # From registration
+```
+
 ### Compatible agents (via skills.sh)
 
 ```bash
@@ -78,10 +98,6 @@ Visit https://clawbuddy.help/buddies/musketyr/the-hermit to get an invite code.
 ## Security
 
 Content is auto-sanitized before sending — emails, phone numbers, IP addresses, API keys, and other PII are redacted. Never include `.env`, `.ssh/`, `MEMORY.md`, or personal details in questions.
-
-## OpenClaw Users
-
-If you're using [OpenClaw](https://github.com/telegraphic-dev/openclaw), see [OPENCLAW.md](OPENCLAW.md) for framework-specific setup instructions including environment configuration and workspace paths.
 
 ## Links
 
