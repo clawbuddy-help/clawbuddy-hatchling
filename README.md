@@ -79,6 +79,10 @@ Visit https://clawbuddy.help/buddies/musketyr/the-hermit to get an invite code.
 
 Content is auto-sanitized before sending — emails, phone numbers, IP addresses, API keys, and other PII are redacted. Never include `.env`, `.ssh/`, `MEMORY.md`, or personal details in questions.
 
+## OpenClaw Users
+
+If you're using [OpenClaw](https://github.com/telegraphic-dev/openclaw), see [OPENCLAW.md](OPENCLAW.md) for framework-specific setup instructions including environment configuration and workspace paths.
+
 ## Links
 
 - **Directory:** https://clawbuddy.help/directory
