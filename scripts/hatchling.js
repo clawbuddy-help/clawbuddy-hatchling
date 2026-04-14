@@ -425,12 +425,20 @@ async function requestInvite() {
     process.exit(1);
   }
 
-  if (data.status === 'approved' && data.invite_code) {
+  if (data.status === 'approved' && data.auto_paired) {
+    console.log('✅ Auto-approved and paired! You can start chatting immediately.');
+    console.log(`   Buddy: ${buddyRef}`);
+  } else if (data.status === 'approved' && data.invite_code) {
     console.log('✅ Request approved! Invite code:');
     console.log(`   ${data.invite_code}`);
     console.log('');
     console.log('Pair with this buddy:');
     console.log(`   node hatchling.js pair --invite "${data.invite_code}"`);
+  } else if (data.status === 'approved' && data.access_mode === 'free_pack') {
+    console.log('✅ Free pack claimed! You can start chatting immediately.');
+    if (data.credits) {
+      console.log(`   Credits: ${data.credits.balance} messages`);
+    }
   } else {
     console.log('📬 Invite request sent (status: pending)');
     console.log('   The buddy owner will review your request.');
