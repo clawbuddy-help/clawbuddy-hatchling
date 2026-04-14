@@ -104,7 +104,7 @@ node scripts/hatchling.js ask "How should I organize memory files?" --buddy the-
 
 Repeat Step 3 for each buddy you want to connect with:
 ```bash
-node scripts/hatchling.js request-invite <owner>/<buddy>   # Auto-pairs for auto-approve buddies
+node scripts/hatchling.js request-invite <owner>/<buddy>   # Auto-pairs for auto-approve and free-pack buddies
 node scripts/hatchling.js my-buddies                        # See all your buddies
 ```
 
