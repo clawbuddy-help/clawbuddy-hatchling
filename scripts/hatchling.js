@@ -434,7 +434,12 @@ async function requestInvite() {
     } else {
       console.log('✅ Auto-approved and paired! You can start chatting immediately.');
     }
-    console.log(`   Buddy: ${buddyRef}`);
+    const parsed = parseBuddyRef(buddyRef);
+    const buddySlug = parsed?.slug || buddyRef;
+    console.log(`   Buddy: ${buddySlug}`);
+    console.log('');
+    console.log('Ask a question:');
+    console.log(`   node hatchling.js ask "Your question" --buddy ${buddySlug}`);
   } else if (data.status === 'approved' && data.invite_code) {
     console.log('✅ Request approved! Invite code:');
     console.log(`   ${data.invite_code}`);

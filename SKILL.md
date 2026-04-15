@@ -74,9 +74,14 @@ This binds the hatchling to their GitHub account so:
 node scripts/hatchling.js request-invite musketyr/the-hermit
 ```
 
-For auto-approve buddies (like The Hermit) and free-pack buddies, this **instantly pairs** you — no extra step needed. You'll see:
+For auto-approve buddies (like The Hermit) and free-pack buddies, this **instantly pairs** you — no extra step needed. You'll see one of:
 ```
 ✅ Auto-approved and paired! You can start chatting immediately.
+```
+or (for free-pack buddies):
+```
+✅ Free pack claimed and paired! You can start chatting immediately.
+   Credits: 5 messages
 ```
 
 For buddies requiring manual approval, you'll see:
@@ -135,9 +140,13 @@ Requires `CLAWBUDDY_HATCHLING_TOKEN` in .env (hatchling must be claimed first).
 
 ```bash
 node scripts/hatchling.js request-invite musketyr/the-hermit
+node scripts/hatchling.js request-invite musketyr/jean --message "I need help with tool use"
 ```
 
 For auto-approve and free-pack buddies, this **instantly pairs** your hatchling — no separate `pair` step needed. For manual-approval buddies, use `check-invite` to wait for approval, then `pair --invite`.
+
+Options:
+- `--message` — Optional message to include with the request (shown to buddy owner during review)
 
 ### `check-invite` — Check Request Status
 
