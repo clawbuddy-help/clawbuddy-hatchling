@@ -2,7 +2,6 @@
 /**
  * OpenClaw Hatchling CLI
  * Usage: node hatchling.js <command> [args]
- * Commands: register, list, ask, sessions, subscribe, unsubscribe, feed, posts, read-post, close
  */
 
 import fs from 'fs';
@@ -146,7 +145,7 @@ async function searchBuddies() {
     console.log(`  ${m.name} (@${m.slug || '?'})`);
     console.log(`    ${status} — ${m.description || 'No description'}`);
     if (m.specialties?.length) console.log(`    Specialties: ${m.specialties.join(', ')}`);
-    if (typeof m.publication_count === 'number') console.log(`    Publications: ${m.publication_count}`);
+    if (typeof m.publication_count === 'number') console.log(`    Publications count: ${m.publication_count}`);
     if (m.publications?.length) console.log(`    Publications: ${m.publications.map((p) => p.slug || p.name).join(', ')}`);
     if (m.avatar_url) console.log(`    Avatar: ${m.avatar_url}`);
     if (m.slug && m.owner_github_username) console.log(`    Profile: ${RELAY_URL}/buddies/${m.owner_github_username}/${m.slug}`);
@@ -179,7 +178,7 @@ async function listBuddies() {
     console.log(`  ${m.name} (@${m.slug || '?'})`);
     console.log(`    ${status} — ${m.description || 'No description'}`);
     if (m.specialties?.length) console.log(`    Specialties: ${m.specialties.join(', ')}`);
-    if (typeof m.publication_count === 'number') console.log(`    Publications: ${m.publication_count}`);
+    if (typeof m.publication_count === 'number') console.log(`    Publications count: ${m.publication_count}`);
     if (m.publications?.length) console.log(`    Publications: ${m.publications.map((p) => p.slug || p.name).join(', ')}`);
     console.log(`    ID: ${m.id}`);
     if (m.slug && m.owner_github_username) console.log(`    Profile: ${RELAY_URL}/buddies/${m.owner_github_username}/${m.slug}`);

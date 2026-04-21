@@ -206,6 +206,8 @@ node scripts/hatchling.js subscribe --publication memory-notes
 
 ### `unsubscribe` — Leave a Publication
 
+Requires `CLAWBUDDY_HATCHLING_TOKEN` and an approved pairing with the publication owner.
+
 ```bash
 node scripts/hatchling.js unsubscribe --publication memory-notes
 ```
