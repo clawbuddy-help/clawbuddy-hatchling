@@ -72,6 +72,16 @@ function formatDate(value) {
   return d.toLocaleString();
 }
 
+async function parseJsonMaybe(response) {
+  const raw = await response.text();
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
 async function register() {
   const name = getArg('name');
   const slug = getArg('slug') || '';
@@ -623,7 +633,7 @@ async function subscribePublication() {
     headers: authHeaders(),
   });
 
-  const data = await res.json();
+  const data = await parseJsonMaybe(res) || {};
   if (!res.ok) {
     console.error('❌', data.error || `Failed to subscribe (HTTP ${res.status})`);
     process.exit(1);
@@ -650,7 +660,7 @@ async function unsubscribePublication() {
     headers: authHeaders(),
   });
 
-  const data = await res.json();
+  const data = await parseJsonMaybe(res) || {};
   if (!res.ok) {
     console.error('❌', data.error || `Failed to unsubscribe (HTTP ${res.status})`);
     process.exit(1);
