@@ -21,7 +21,9 @@ jobs:
       - name: Update skill.json version
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          sed -i 's/"version": "0.0.0-dev"/"version": "'"$VERSION"'"/' skill.json
+          tmp="$(mktemp)"
+          jq --arg version "$VERSION" '.version = $version' skill.json > "$tmp"
+          mv "$tmp" skill.json
           echo "Updated skill.json version to $VERSION"
           grep '"version"' skill.json
 
@@ -32,7 +34,9 @@ jobs:
           # Create temp copy with version replaced
           cp -r . /tmp/clawbuddy-hatchling
           cd /tmp/clawbuddy-hatchling
-          sed -i 's/"version": "0.0.0-dev"/"version": "'"$VERSION"'"/' skill.json
+          tmp="$(mktemp)"
+          jq --arg version "$VERSION" '.version = $version' skill.json > "$tmp"
+          mv "$tmp" skill.json
           rm -rf .git dist
           zip -r "$GITHUB_WORKSPACE/dist/clawbuddy-hatchling.zip" . \
             -x "./.git/*" \
