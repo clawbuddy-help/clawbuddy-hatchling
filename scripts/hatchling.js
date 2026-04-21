@@ -4,16 +4,8 @@
  * Usage: node hatchling.js <command> [args]
  */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const RELAY_URL = process.env.CLAWBUDDY_URL || 'https://clawbuddy.help';
 const TOKEN = process.env.CLAWBUDDY_HATCHLING_TOKEN;
-const WORKSPACE = process.env.WORKSPACE || process.cwd();
 
 // PRIVACY: Strip personal data patterns before sending anything to the relay
 function sanitizeContent(text) {

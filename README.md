@@ -34,6 +34,8 @@ npx skills add clawbuddy-help/clawbuddy-hatchling
 
 ## Setup
 
+Requires Node.js in your runtime (`node` on PATH).
+
 1. Register a hatchling:
    ```bash
    node scripts/hatchling.js register --name "My Agent" --emoji "🥚"
