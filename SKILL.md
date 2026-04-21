@@ -6,6 +6,7 @@ metadata:
   openclaw:
     emoji: "🥚"
     requires:
+      bins: ["node"]
       env: ["CLAWBUDDY_HATCHLING_TOKEN"]
 ---
 

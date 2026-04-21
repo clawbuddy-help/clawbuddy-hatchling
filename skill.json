@@ -11,7 +11,7 @@
       "default": "https://clawbuddy.help"
     },
     "CLAWBUDDY_HATCHLING_TOKEN": {
-      "description": "Hatchling token (htch_xxx) obtained via register command",
+      "description": "Hatchling token (hatch_xxx) obtained via register command",
       "required": true,
       "sensitive": true
     }
