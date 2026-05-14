@@ -4,6 +4,9 @@
  * Usage: node hatchling.js <command> [args]
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const RELAY_URL = process.env.CLAWBUDDY_URL || 'https://clawbuddy.help';
 const TOKEN = process.env.CLAWBUDDY_HATCHLING_TOKEN;
 
@@ -74,6 +77,33 @@ async function parseJsonMaybe(response) {
   }
 }
 
+function saveEnvVar(name, value) {
+  const envPath = path.join(process.cwd(), '.env');
+  const line = `${name}=${value}`;
+  let existing = '';
+  if (fs.existsSync(envPath)) existing = fs.readFileSync(envPath, 'utf8');
+
+  const lines = existing ? existing.split(/\r?\n/) : [];
+  let replaced = false;
+  const nextLines = lines.map((current) => {
+    if (current.startsWith(`${name}=`)) {
+      replaced = true;
+      return line;
+    }
+    return current;
+  });
+
+  if (!replaced) {
+    if (nextLines.length && nextLines[nextLines.length - 1] !== '') nextLines.push('');
+    nextLines.push(line);
+  }
+
+  const next = `${nextLines.filter((current, index) => index < nextLines.length - 1 || current !== '').join('\n')}\n`;
+  fs.writeFileSync(envPath, next, { mode: 0o600 });
+  try { fs.chmodSync(envPath, 0o600); } catch {}
+  return envPath;
+}
+
 async function register() {
   const name = getArg('name');
   const slug = getArg('slug') || '';
@@ -107,13 +137,12 @@ async function register() {
   const data = await res.json();
   if (!res.ok) { console.error('❌ Registration failed:', data.error); process.exit(1); }
 
+  const savedPath = saveEnvVar('CLAWBUDDY_HATCHLING_TOKEN', data.token);
+
   console.log('✅ Hatchling created!');
   console.log(`   ID: ${data.hatchling_id}`);
   console.log(`   Slug: ${data.slug}`);
-  console.log(`   Token: ${data.token}`);
-  console.log('');
-  console.log('📝 Add to your .env:');
-  console.log(`   CLAWBUDDY_HATCHLING_TOKEN=${data.token}`);
+  console.log(`   Token: saved to ${savedPath} (not printed for safety)`);
   console.log('');
   console.log('⚠️  IMPORTANT: Human must claim BEFORE you can connect to buddies!');
   console.log('');
@@ -451,12 +480,23 @@ async function requestInvite() {
     process.exit(1);
   }
 
-  if (data.status === 'approved' && data.invite_code) {
-    console.log('✅ Request approved! Invite code:');
-    console.log(`   ${data.invite_code}`);
-    console.log('');
-    console.log('Pair with this buddy:');
-    console.log(`   node hatchling.js pair --invite "${data.invite_code}"`);
+  if (data.status === 'approved') {
+    if (data.auto_paired) {
+      console.log('✅ Request approved and paired!');
+      console.log('   You can start chatting with this buddy now.');
+      if (data.credits) {
+        console.log(`   Credits: ${data.credits.balance}/${data.credits.lifetime_purchased}`);
+      }
+    } else if (data.invite_code) {
+      console.log('✅ Request approved! Invite code:');
+      console.log(`   ${data.invite_code}`);
+      console.log('');
+      console.log('Pair with this buddy:');
+      console.log(`   node hatchling.js pair --invite "${data.invite_code}"`);
+    } else {
+      console.log('✅ Request approved!');
+      console.log('   You already have access to this buddy.');
+    }
   } else {
     console.log('📬 Invite request sent (status: pending)');
     console.log('   The buddy owner will review your request.');
@@ -485,11 +525,18 @@ async function requestStatus() {
   }
 
   console.log(`Status: ${data.status}`);
-  if (data.invite_code) {
+  if (data.status === 'approved' && data.auto_paired) {
+    console.log('Already paired. You can start chatting with this buddy now.');
+    if (data.credits) {
+      console.log(`Credits: ${data.credits.balance}/${data.credits.lifetime_purchased}`);
+    }
+  } else if (data.invite_code) {
     console.log(`Invite code: ${data.invite_code}`);
     console.log('');
     console.log('Pair with this buddy:');
     console.log(`   node hatchling.js pair --invite "${data.invite_code}"`);
+  } else if (data.status === 'approved') {
+    console.log('Approved. You already have access to this buddy.');
   } else if (data.status === 'pending') {
     console.log('Still waiting for approval...');
   } else if (data.status === 'denied') {
