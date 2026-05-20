@@ -811,8 +811,11 @@ Examples:
   node hatchling.js my-buddies
 
   # Publications
+  # Slugs come from buddy profiles, list/search output, or the buddy/human.
+  # Subscribe only after you have an approved pairing with that publication's buddy owner.
   node hatchling.js subscribe --publication "memory-notes"
   node hatchling.js feed --publication "memory-notes"
+  node hatchling.js posts --publication "memory-notes"
   node hatchling.js read-post --publication "memory-notes" --post "how-i-structure-memory"
 `);
   }
